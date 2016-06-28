@@ -1,3 +1,6 @@
+var bibfileimg = 'https://TobMas.github.io/publications/bibtex.png';
+var pdffileimg = 'https://TobMas.github.io/publications/pdf.png';
+var linkimg = 'https://TobMas.github.io/publications/hyperlink.png';
 
 var bibtexify = (function($) {
     // helper function to "compile" LaTeX special characters to HTML
