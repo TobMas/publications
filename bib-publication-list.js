@@ -378,8 +378,7 @@ var bibtexify = (function($) {
         });
         var chartIdSelector = "#" + this.$pubTable[0].id + "pubchart";
         var pubHeight = $(chartIdSelector).height()/max - 2;
-        //                (100.0/yearstats.length) + "%; }" +
-        alert(yearstats.length);
+        
         var styleStr = chartIdSelector +" .year { width: " +
 			(100.0/yearstats.length) + "%; }" +
                         chartIdSelector + " .pub { height: " + pubHeight + "px; }";
