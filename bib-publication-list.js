@@ -6,27 +6,29 @@ var bibtexify = (function($) {
     // helper function to "compile" LaTeX special characters to HTML
     var htmlify = function(str) {
         // TODO: this is probably not a complete list..
-        str = str.replace(/\\"\{a\}/g, '&auml;')
+        str = str.replace(/\{/g, '')
+            .replace(/\}/g, '')
+			.replace(/\\"\{a\}/g, '&auml;')
             .replace(/\{\\aa\}/g, '&aring;')
             .replace(/\\aa\{\}/g, '&aring;')
             .replace(/\\"a/g, '&auml;')
             .replace(/\\"o/g, '&ouml;')
             .replace(/\\"u/g, '&uuml;')
-            .replace(/\\"A/g, '&Auml;')
-            .replace(/\\"O/g, '&Ouml;')
-            .replace(/\\"U/g, '&Uuml;')
             .replace(/\\'e/g, '&eacute;')
             .replace(/\\'\{e\}/g, '&eacute;')
             .replace(/\\'a/g, '&aacute;')
             .replace(/\\'A/g, '&Aacute;')
+            .replace(/\\"A/g, '&Auml;')
+            .replace(/\\"O/g, '&Ouml;')
+            .replace(/\\"U/g, '&Uuml;')
             .replace(/\\ss/g, '&szlig;')
-            .replace(/\{/g, '')
-            .replace(/\}/g, '')
             .replace(/\\&/g, '&amp;')
-            .replace(/--/g, '&ndash;');
+            .replace(/--/g, '&ndash;')
+            .replace(/'/g, '&#39;');
         return str;
     };
     var uriencode = function(str) {
+        // TODO: this is probably not a complete list..
         str = str.replace(/\\"\{a\}/g, '%C3%A4')
             .replace(/\{\\aa\}/g, '%C3%A5')
             .replace(/\\aa\{\}/g, '%C3%A5')
@@ -57,7 +59,7 @@ var bibtexify = (function($) {
             }
             var itemStr = htmlify(bib2html[type](entryData));
             itemStr += bib2html.links(entryData);
-			itemStr += bib2html.bibtex(entryData);
+            itemStr += bib2html.bibtex(entryData);
             if (bib.options.tweet && entryData.url) {
                 itemStr += bib2html.tweet(entryData, bib);
             }
@@ -81,11 +83,11 @@ var bibtexify = (function($) {
         links: function(entryData) {
             var itemStr = '<br>';
             if (entryData.url && entryData.url.match(/.*\.pdf/)) {
-                itemStr += ' <a title="PDF document of this article" href="' +
-                            entryData.url + '"><img src=\"'+pdffileimg+'\" style="margin-right:30px" class="alignleft"/><\/a> ';
+                itemStr += ' <a title="PDF-version of this article" href="' +
+                            entryData.url + '"><img src=\"'+pdffileimg+'\" /><\/a> ';
             } else if (entryData.url) {
                 itemStr += ' <a title="This article online" href="' + entryData.url +
-                            '"><img src=\"'+linkimg+'\"  style="margin-right:30px" class="alignleft"/><\/a>';
+                            '"><img src=\"'+linkimg+'\" /><\/a>';
             }
             return itemStr;
         },
@@ -93,7 +95,7 @@ var bibtexify = (function($) {
         bibtex: function(entryData) {
             var itemStr = '';
             itemStr += ' <a title="This article as BibTeX" href="#" class="biblink">' +
-                        '<img src=\"'+bibfileimg+'\" style="margin-right:30px" class="alignleft"/></a><div class="bibinfo hidden">';
+                        '<img src=\"'+bibfileimg+'\" /></a><div class="bibinfo hidden">';
             itemStr += '<a href="#" class="bibclose" title="Close">x</a><pre>';
             itemStr += '@' + entryData.entryType + "{" + entryData.cite + ",\n";
             $.each(entryData, function(key, value) {
@@ -338,8 +340,8 @@ var bibtexify = (function($) {
           }
         });
         // attach the event handlers to the bib items
-        $(".biblink", this.$pubTable).bind('click', EventHandlers.showbib);
-        $(".bibclose", this.$pubTable).bind('click', EventHandlers.hidebib);
+        $(".biblink", this.$pubTable).live('click', EventHandlers.showbib);
+        $(".bibclose", this.$pubTable).live('click', EventHandlers.hidebib);
     };
     // updates the stats, called whenever a new bibtex entry is parsed
     bibproto.updateStats = function updateStats(item) {
@@ -443,41 +445,15 @@ var bibtexify = (function($) {
         if (options.visualization) {
             $pubTable.before('<div id="' + bibElemId + 'pubchart" class="bibchart"></div>');
         }
-		
-		/*
-		if (typeof jQuery != 'undefined') {  
-		// jQuery is loaded => print the version
-		console.log(jQuery.fn.jquery);
-		}
-		console.log($ === jQuery);
-		*/
-		
-		if (typeof jQuery != 'undefined') {
-			
-			if (jQuery.fn.jquery != "1.6.4")
-			{
-				// New code (tested with jQuery 2.1.4) gets Bibtex-Data via jQuery Ajax request and parses the data to Bib2HTML function
-				$.get( bibsrc, function( data ) {
-					new Bib2HTML(data, $pubTable, options);
-				})
-				  .fail(function() {
-					document.getElementById(bibElemId).innerHTML = "File: '" + bibsrc + "' not found.";
-				  });
-			}
-			else
-			{
-				// Deprecated code (needs jQuery 1.6.4)
-				var $bibSrc = $(bibsrc);
-				if ($bibSrc.length) { // we found an element, use its HTML as bibtex
-					new Bib2HTML($bibSrc.html(), $pubTable, options);
-					$bibSrc.hide();
-				} else { // otherwise we assume it is a URL
-					var callbackHandler = function(data) {
-						new Bib2HTML(data, $pubTable, options);
-					};
-					$.get(bibsrc, callbackHandler, "text");
-				}
-			}
-		}
+        var $bibSrc = $(bibsrc);
+        if ($bibSrc.length) { // we found an element, use its HTML as bibtex
+            new Bib2HTML($bibSrc.html(), $pubTable, options);
+            $bibSrc.hide();
+        } else { // otherwise we assume it is a URL
+            var callbackHandler = function(data) {
+                new Bib2HTML(data, $pubTable, options);
+            };
+            $.get(bibsrc, callbackHandler, "text");
+        }
     };
 })(jQuery);
