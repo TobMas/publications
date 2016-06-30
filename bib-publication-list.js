@@ -406,7 +406,7 @@ var bibtexify = (function($) {
             return str + '<div class="yearlabel">' + item.year + '</div></div>';
         };
         var statsHtml = "<style>" + styleStr + "</style>";
-        alert(styleStr);
+        console.log(styleStr);
         yearstats.forEach(function(item) {
             statsHtml += stats2html(item);
         });
