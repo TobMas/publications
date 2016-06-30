@@ -266,8 +266,8 @@ var bibtexify = (function($) {
         this.$pubTable = $pubTable;
         this.stats = { };
         this.initialize(data);
-                                      console.log('text');
     };
+
     var bibproto = Bib2HTML.prototype;
     bibproto.initialize = function initialize(data) {
         var bibtex = new BibTex();
