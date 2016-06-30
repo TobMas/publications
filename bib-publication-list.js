@@ -116,7 +116,6 @@ var bibtexify = (function($) {
         // generates the twitter link for the entry
         tweet: function(entryData, bib) {
           // url, via, text
-                              console.log('text');
           var itemStr = ' (<a title="Tweet this article" href="http://twitter.com/share?url=';
           itemStr += entryData.url;
           itemStr += '&via=' + bib.options.tweet;
@@ -267,6 +266,7 @@ var bibtexify = (function($) {
         this.$pubTable = $pubTable;
         this.stats = { };
         this.initialize(data);
+                                      console.log('text');
     };
     var bibproto = Bib2HTML.prototype;
     bibproto.initialize = function initialize(data) {
