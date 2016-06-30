@@ -6,7 +6,6 @@ var bibtexify = (function($) {
     // helper function to "compile" LaTeX special characters to HTML
     var htmlify = function(str) {
         // TODO: this is probably not a complete list..
-        console.log('text');
         str = str.replace(/\{/g, '')
             .replace(/\}/g, '')
 			.replace(/\\"\{a\}/g, '&auml;')
@@ -382,6 +381,7 @@ var bibtexify = (function($) {
         	//(100.0/yearstats.length) + "%; }" +
         var styleStr = chartIdSelector +" .year { width: 990px " +
 			chartIdSelector + " .pub { height: " + pubHeight + "px; }";
+			        console.log(styleStr);
         var legendTypes = [];
         var stats2html = function(item) {
             var types = [],
