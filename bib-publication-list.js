@@ -111,7 +111,6 @@ var bibtexify = (function($) {
                 }
             });
             itemStr += "}</pre></div>";
-                             console.log('itemstr = '+itemStr);
             return itemStr;
         },
         // generates the twitter link for the entry
