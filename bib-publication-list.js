@@ -53,8 +53,7 @@ var bibtexify = (function($) {
         entry2html: function(entryData, bib) {
             var type = entryData.entryType.toLowerCase();
             // default to type misc if type is unknown
-                    console.log('text');
-                    if(array_keys(bib2html).indexOf(type) === -1) {
+            if(array_keys(bib2html).indexOf(type) === -1) {
                 type = 'misc';
                 entryData.entryType = type;
             }
@@ -95,7 +94,8 @@ var bibtexify = (function($) {
         // adds the bibtex link and the opening div with bibtex content
         bibtex: function(entryData) {
             var itemStr = '';
-            itemStr += ' <a title="This article as BibTeX" href="#" class="biblink">' +
+                    console.log('text');
+                    itemStr += ' <a title="This article as BibTeX" href="#" class="biblink">' +
                         '<img src=\"'+bibfileimg+'\" /></a><div class="bibinfo hidden">';
             itemStr += '<a href="#" class="bibclose" title="Close">x</a><pre>';
             itemStr += '@' + entryData.entryType + "{" + entryData.cite + ",\n";
