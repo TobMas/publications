@@ -6,6 +6,7 @@ var bibtexify = (function($) {
     // helper function to "compile" LaTeX special characters to HTML
     var htmlify = function(str) {
         // TODO: this is probably not a complete list..
+        console.log('text');
         str = str.replace(/\{/g, '')
             .replace(/\}/g, '')
 			.replace(/\\"\{a\}/g, '&auml;')
