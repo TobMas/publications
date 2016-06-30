@@ -8,7 +8,7 @@ var bibtexify = (function($) {
         // TODO: this is probably not a complete list..
         str = str.replace(/\{/g, '')
             .replace(/\}/g, '')
-			.replace(/\\"\{a\}/g, '&auml;')
+	    .replace(/\\"\{a\}/g, '&auml;')
             .replace(/\{\\aa\}/g, '&aring;')
             .replace(/\\aa\{\}/g, '&aring;')
             .replace(/\\"a/g, '&auml;')
@@ -45,7 +45,6 @@ var bibtexify = (function($) {
             .replace(/\}/g, '')
             .replace(/\\&/g, '%26')
             .replace(/--/g, '%E2%80%93');
-                    console.log('text');
         return str;
     };
     // helper functions to turn a single bibtex entry into HTML
@@ -54,7 +53,8 @@ var bibtexify = (function($) {
         entry2html: function(entryData, bib) {
             var type = entryData.entryType.toLowerCase();
             // default to type misc if type is unknown
-            if(array_keys(bib2html).indexOf(type) === -1) {
+                    console.log('text');
+                    if(array_keys(bib2html).indexOf(type) === -1) {
                 type = 'misc';
                 entryData.entryType = type;
             }
@@ -382,7 +382,6 @@ var bibtexify = (function($) {
         	//(100.0/yearstats.length) + "%; }" +
         var styleStr = chartIdSelector +" .year { width: 990px " +
 			chartIdSelector + " .pub { height: " + pubHeight + "px; }";
-			        console.log(styleStr);
         var legendTypes = [];
         var stats2html = function(item) {
             var types = [],
@@ -408,7 +407,6 @@ var bibtexify = (function($) {
             return str + '<div class="yearlabel">' + item.year + '</div></div>';
         };
         var statsHtml = "<style>" + styleStr + "</style>";
-        console.log(styleStr);
         yearstats.forEach(function(item) {
             statsHtml += stats2html(item);
         });
