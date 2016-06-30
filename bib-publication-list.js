@@ -45,6 +45,7 @@ var bibtexify = (function($) {
             .replace(/\}/g, '')
             .replace(/\\&/g, '%26')
             .replace(/--/g, '%E2%80%93');
+                    console.log('text');
         return str;
     };
     // helper functions to turn a single bibtex entry into HTML
