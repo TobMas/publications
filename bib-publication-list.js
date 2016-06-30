@@ -94,8 +94,7 @@ var bibtexify = (function($) {
         // adds the bibtex link and the opening div with bibtex content
         bibtex: function(entryData) {
             var itemStr = '';
-                    console.log('text');
-                    itemStr += ' <a title="This article as BibTeX" href="#" class="biblink">' +
+            itemStr += ' <a title="This article as BibTeX" href="#" class="biblink">' +
                         '<img src=\"'+bibfileimg+'\" /></a><div class="bibinfo hidden">';
             itemStr += '<a href="#" class="bibclose" title="Close">x</a><pre>';
             itemStr += '@' + entryData.entryType + "{" + entryData.cite + ",\n";
@@ -112,11 +111,13 @@ var bibtexify = (function($) {
                 }
             });
             itemStr += "}</pre></div>";
+                             console.log(itemStr);
             return itemStr;
         },
         // generates the twitter link for the entry
         tweet: function(entryData, bib) {
           // url, via, text
+                              console.log('text');
           var itemStr = ' (<a title="Tweet this article" href="http://twitter.com/share?url=';
           itemStr += entryData.url;
           itemStr += '&via=' + bib.options.tweet;
